@@ -1,0 +1,25 @@
+--- 
+- 
+  hosts: localhost
+  vars: 
+    ansible_egg: http://github.com/ansible/ansible/tarball/master
+    playbook: /home/philips/.ansible/pull/philips-HP-EliteDesk-800-G3-TWR/test.yaml
+    repo_url: http://github.com/rudraprasadbv/AnsibleTrial.git
+    schedule: "*/5 * * * *"
+    workdir: /home/philips/Ansible/WorkingDirc
+    # File that ansible will use for logs
+    logfile: /home/philips/Ansible/log/ansible-pull.log
+
+    # User to run ansible-pull as from cron
+    cron_user: root
+  tasks:
+  - name: Ansible pull cmd 
+    #action: ansible-pull workdir={{ workdir }} repo_url={{ repo_url }} playbook={{ playbook }} [schedule={{ schedule }}] [user=root] [group=root] [ansible={{ ansible_egg }}]
+    template: src=templates/etc_cron.d_ansible-pull.j2 dest=/etc/cron.d/ansible-pull
+    environment: 
+      http_proxy: "http://165.225.104.34:9480"
+      https_proxy: "https://165.225.104.34:9480"
+
+  - name: Create logrotate entry for ansible-pull.log
+    template: src=templates/etc_logrotate.d_ansible-pull.j2 dest=/etc/logrotate.d/ansible-pull
+
