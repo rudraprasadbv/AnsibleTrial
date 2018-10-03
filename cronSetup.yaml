@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+
+  #sudo: yes
+
+  tasks:
+    - name: Cron job to prune old elasticsearch indexes
+      cron:
+        name: cleanup-elasticsearch-indexes
+        minute: 5
+        #hour: 0
+        job: /home/philips/AnsibleCron/TestCronJob.sh
+        #state: present
+        #user: curator
