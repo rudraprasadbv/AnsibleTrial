@@ -7,8 +7,8 @@
     - name: Cron job to prune old elasticsearch indexes
       cron:
         name: cleanup-elasticsearch-indexes
-        minute: 5
+        minute: 5,10,15,20,25,30,35,40,45,50,55
         #hour: 0
         job: /home/philips/AnsibleCron/TestCronJob.sh
         #state: present
-        #user: curator
+        #user: root
